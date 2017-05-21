@@ -26,16 +26,15 @@
         <service
             android:name=".sync.QuoteIntentService"
             android:exported="false" />
-
         <service
             android:name=".QuoteWidgetRemoteViewService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:exported="false" />
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <provider
             android:name=".data.StockProvider"
             android:authorities="com.udacity.stockhawk"
-            android:exported="false" />
+            android:exported="true" />
 
         <service
             android:name=".sync.QuoteJobService"
@@ -52,6 +51,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/quote_widget_provider_info" />
         </receiver>
+
+        <activity android:name=".ui.DetailActivity"></activity>
     </application>
 
 </manifest>

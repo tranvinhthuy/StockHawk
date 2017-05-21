@@ -8,6 +8,10 @@ import android.widget.RemoteViewsService;
 
 import com.udacity.stockhawk.data.Contract;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Created by tranv on 20-May-17.
  */
@@ -55,6 +59,20 @@ public class QuoteWidgetRemoteViewService extends RemoteViewsService {
                 if(data.moveToPosition(position)) {
                     views.setTextViewText(R.id.stock_symbol,
                             data.getString(data.getColumnIndex(Contract.Quote.COLUMN_SYMBOL)));
+                    views.setTextViewText(R.id.stock_value,
+                            data.getString(data.getColumnIndex(Contract.Quote.COLUMN_PRICE)));
+                    float percentageChange = data.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
+
+                    if (percentageChange > 0) {
+                        views.setInt(R.id.stock_change, "setBackgroundResource", R.drawable.percent_change_pill_green);
+                    } else {
+                        views.setInt(R.id.stock_change, "setBackgroundResource", R.drawable.percent_change_pill_red);
+                    }
+                    DecimalFormat percentageFormat = (DecimalFormat) NumberFormat.getPercentInstance(Locale.getDefault());
+                    percentageFormat.setMaximumFractionDigits(2);
+                    percentageFormat.setMinimumFractionDigits(2);
+                    percentageFormat.setPositivePrefix("+");
+                    views.setTextViewText(R.id.stock_change, percentageFormat.format(percentageChange / 100));
                 }
                 return views;
             }
