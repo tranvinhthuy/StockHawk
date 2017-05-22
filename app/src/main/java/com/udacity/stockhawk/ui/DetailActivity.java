@@ -35,6 +35,9 @@ public class DetailActivity extends AppCompatActivity {
 
 
         Intent i = getIntent();
+        if(i==null)
+            return;
+
         String symbol = i.getStringExtra(SYMBOL_INTENT_KEY);
         if(symbol != null)
             new GetDataTask().execute(new String[]{symbol});
